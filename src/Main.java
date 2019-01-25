@@ -7,20 +7,43 @@ public class Main {
     private static Graph graph = new Graph();
     private static HashMap<String, Integer> map = new HashMap<>();
 
-    public static void main(String[] Args) throws InvalidNodeIDException, IOException, NodeAlreadyExistsException {
+    public static void main(String[] Args) throws InvalidNodeIDException, IOException, NodeAlreadyExistsException, NodeDoesNotExistException {
 
         readFileNodes("input.txt", map, graph);
+        readFileEdges("input.txt", map, graph);
 
-        /*System.out.println(graph.nodeExists(map.get("perro")));
-        System.out.println(graph.nodeExists(map.get("carro")));
-        System.out.println(graph.nodeExists(map.get("roto")));
+//        System.out.println(map.get("Colombia"));
+//        System.out.println(map.get("Argentina"));
+//        System.out.println(map.get("Venezuela"));
+//        System.out.println(map.get("Peru"));
+//        System.out.println(map.get("Mexico"));
+//        System.out.println(map.get("Rusia"));
+//        System.out.println(map.get("España"));
 
-        System.out.println(map.get("perro"));
-        System.out.println(map.get("carro"));
-        System.out.println(map.get("roto"));*/
+//        System.out.println(graph.nodeExists(map.get("Colombia")));
+//        System.out.println(graph.nodeExists(map.get("Argentina")));
+//        System.out.println(graph.nodeExists(map.get("Venezuela")));
+//        System.out.println(graph.nodeExists(map.get("Peru")));
+//        System.out.println(graph.nodeExists(map.get("Mexico")));
+//        System.out.println(graph.nodeExists(map.get("Rusia")));
+//        System.out.println(graph.nodeExists(map.get("España")));
+
+//        System.out.println(graph.getNumEdges(0,1));
+//        System.out.println(graph.getNumEdges(1, 0));
+//        System.out.println(graph.getNumEdges(1, 2));
+//        System.out.println(graph.getNumEdges(2, 6));
+//        System.out.println(graph.getNumEdges(2, 3));
+//        System.out.println(graph.getNumEdges(3, 0));
+//        System.out.println(graph.getNumEdges(5, 4));
+
+
+        //graph.printEdges();
+
+        graph.dijkstra(0);
+
     }
 
-    private static void readFileNodes(String filePath, HashMap<String, Integer> m, Graph g) throws IOException, NodeAlreadyExistsException, InvalidNodeIDException {
+    private static void readFileNodes(String filePath, HashMap<String, Integer> m, Graph g) throws IOException, NodeAlreadyExistsException, InvalidNodeIDException, NodeDoesNotExistException {
         int count = 0;
         String line = "";
         String[] nd = new String[3];
@@ -35,9 +58,6 @@ public class Main {
                     count++;
                 }
             }
-            fis.getChannel().position(0);  //Resets the buffered reader so it can start reading the file from the first line
-            br = new BufferedReader(new InputStreamReader(fis));
-            
         } catch (FileNotFoundException e) {
             System.out.println("File does not exist!");
         } catch (IOException e) {
@@ -45,20 +65,24 @@ public class Main {
         }
     }
 
-    /*public static void readFileEdges(String filePath) throws InvalidNodeIDException, NodeDoesNotExistException {
+    public static void readFileEdges(String filePath, HashMap<String, Integer> m, Graph g) throws InvalidNodeIDException, NodeDoesNotExistException, NodeAlreadyExistsException {
         String[] ed = new String[3];
         String line = "";
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File(filePath)));
             while ((line = br.readLine()) != null) {
                 ed = line.split(",");
-                graph.addEdge(map.get(ed[0]), map.get(ed[1]), Integer.parseInt(ed[2]));
+                if (m.containsKey(ed[1]) == false) {
+                    m.put(ed[1], m.size());
+                    g.addNode(m.get(ed[1]));
+                }
+                g.addEdge(m.get(ed[0]), m.get(ed[1]), Integer.parseInt(ed[2]));
             }
         } catch (FileNotFoundException e) {
             System.out.println("File does not exist!");
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
 }
