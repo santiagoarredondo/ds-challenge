@@ -7,24 +7,37 @@ public class Main {
     private static Graph graph = new Graph();
     private static HashMap<String, Integer> map = new HashMap<>();
 
-    public static void main(String[] Args) {
+    public static void main(String[] Args) throws InvalidNodeIDException, IOException, NodeAlreadyExistsException {
 
+        readFileNodes("input.txt", map, graph);
+
+        /*System.out.println(graph.nodeExists(map.get("perro")));
+        System.out.println(graph.nodeExists(map.get("carro")));
+        System.out.println(graph.nodeExists(map.get("roto")));
+
+        System.out.println(map.get("perro"));
+        System.out.println(map.get("carro"));
+        System.out.println(map.get("roto"));*/
     }
 
-    private static void readFileNodes(String filePath) {
-        //Graph graph = new Graph();
-        //HashMap<String, Integer> hm = new HashMap<>();
+    private static void readFileNodes(String filePath, HashMap<String, Integer> m, Graph g) throws IOException, NodeAlreadyExistsException, InvalidNodeIDException {
         int count = 0;
         String line = "";
         String[] nd = new String[3];
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File(filePath)));
+            FileInputStream fis = new FileInputStream(new File(filePath));
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             while ((line = br.readLine()) != null) {
                 nd = line.split(",");
-                map.put(nd[0], count);
-                //graph.addNode(hm.get(nd[1]));
-                count++;
+                if (m.containsKey(nd[0]) == false) {
+                    m.put(nd[0], count);
+                    g.addNode(m.get(nd[0]));
+                    count++;
+                }
             }
+            fis.getChannel().position(0);  //Resets the buffered reader so it can start reading the file from the first line
+            br = new BufferedReader(new InputStreamReader(fis));
+            
         } catch (FileNotFoundException e) {
             System.out.println("File does not exist!");
         } catch (IOException e) {
@@ -32,20 +45,20 @@ public class Main {
         }
     }
 
-    public static void readFileEdges(String filePath) {
+    /*public static void readFileEdges(String filePath) throws InvalidNodeIDException, NodeDoesNotExistException {
         String[] ed = new String[3];
         String line = "";
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File(filePath)));
             while ((line = br.readLine()) != null) {
                 ed = line.split(",");
-                //graph.addEdge(map.get(ed[0]), map.get(ed[1]), Integer.parseInt(ed[2]));
+                graph.addEdge(map.get(ed[0]), map.get(ed[1]), Integer.parseInt(ed[2]));
             }
         } catch (FileNotFoundException e) {
             System.out.println("File does not exist!");
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 }
