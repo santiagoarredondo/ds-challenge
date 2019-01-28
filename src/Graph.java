@@ -100,7 +100,8 @@ public class Graph {
         }
     }
 
-    public void shortestPath(int origin, int dest) throws InvalidNodeIDException{
+    public String shortestPath(int origin, int dest) throws InvalidNodeIDException{
+    	String shortest ="";
         boolean[] known = new boolean[CAPACITY];
         int[] dv = new int[CAPACITY];
         int[] pv = new int[CAPACITY];
@@ -144,11 +145,20 @@ public class Graph {
                 for (int i = 0; i < CAPACITY; i++) {
                     if (nodes[i]) {
                         if ((i == dest) && known[dest]) {
-                            System.out.println("=============================");
-                            System.out.println(" v    known    dv    pv");
-                            System.out.println("=============================");
-                            System.out.printf("%2d    %1b    %4d    %4d  %n", i, known[i], dv[i], pv[i]);
-                            System.out.println("=============================");
+                        	//System.out.println("=============================");
+
+                            //System.out.println(" v    known    dv    pv");
+
+                            //System.out.println("=============================");
+
+//                            System.out.printf("%2d    %1b    %4d    %4d  %n", i, known[i], dv[i], pv[i]);
+                            
+                            //System.out.println("=============================");
+                            shortest+="=============================\n";
+                            shortest+=" v    known    dv    pv \n";
+                            shortest+="=============================\n";                           
+                            shortest+=" "+Integer.toString(i) +"    " +known[i]+"     " +dv[i]+"     "+ pv[i]+"\n";
+                            shortest+="=============================\n";
                             //known[actual] = true;
                         }
                     }
@@ -160,6 +170,7 @@ public class Graph {
             System.out.println("");
             System.out.println("Destiny node is not accessible.");
         }
+        return shortest;
     }
 
 }

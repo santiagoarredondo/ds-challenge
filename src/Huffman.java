@@ -41,7 +41,11 @@ public class Huffman {
         init(original);
     }
 
-    /**
+    public Huffman() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * Length of encoded data in bits.
      * @return number of bits.
      */
@@ -238,7 +242,7 @@ public class Huffman {
     }
     */
 
-    private static void writeFile(String filePath, String fileContent){
+    public static  void writeFile(String filePath, String fileContent){
         try {
             FileOutputStream outputStream = new FileOutputStream(filePath);
             byte[] strToBytes = fileContent.getBytes();

@@ -6,6 +6,7 @@ public class Main {
 
     private static Graph graph = new Graph();
     private static HashMap<String, Integer> map = new HashMap<>();
+    private static  Huffman huff = new Huffman();
 
     public static void main(String[] Args) throws InvalidNodeIDException, IOException, NodeAlreadyExistsException, NodeDoesNotExistException {
 
@@ -39,8 +40,9 @@ public class Main {
 
         //graph.printEdges();
 
-        //graph.dijkstra(0);
-        graph.shortestPath(0, 3);
+        graph.dijkstra(0);        
+        String shortest = graph.shortestPath(0, 3);        
+        huff.writeFile(System.getProperty("user.dir")+"\\"+"shortest.txt",shortest);
 
     }
 
