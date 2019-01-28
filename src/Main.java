@@ -39,7 +39,8 @@ public class Main {
 
         //graph.printEdges();
 
-        graph.dijkstra(0);
+        //graph.dijkstra(0);
+        graph.shortestPath(0, 3);
 
     }
 
