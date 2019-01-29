@@ -51,7 +51,8 @@ public class Graph {
         dist[origin][dest]=distance;
     }
 
-    public void dijkstra(int origin) throws InvalidNodeIDException{
+    public ArrayList<String> dijkstra(int origin) throws InvalidNodeIDException{
+    	ArrayList<String> dijkstraValue = new ArrayList<String>();
         boolean[] known=new boolean[CAPACITY];
         int[] dv = new int[CAPACITY];
         int[] pv = new int[CAPACITY];
@@ -88,16 +89,16 @@ public class Graph {
                 }
             }
             //Mostrar la tabla
-            System.out.println("=============================");
-            System.out.println(" v    known    dv    pv");
-            System.out.println("=============================");
+                                                   
             for(int i=0;i<CAPACITY;i++){
                 if(nodes[i]){
-                    System.out.printf("%2d    %1b    %4d    %4d  %n",i,known[i],dv[i],pv[i]);
+                	dijkstraValue.add(" "+Integer.toString(i) +"    " +known[i]+"     " +dv[i]+"     "+ pv[i]+"\r\n");
                 }
             }
-            System.out.println("=============================");
+            
+            
         }
+		return dijkstraValue;
     }
 
     public String shortestPath(int origin, int dest) throws InvalidNodeIDException{
@@ -145,21 +146,12 @@ public class Graph {
                 for (int i = 0; i < CAPACITY; i++) {
                     if (nodes[i]) {
                         if ((i == dest) && known[dest]) {
-                        	//System.out.println("=============================");
 
-                            //System.out.println(" v    known    dv    pv");
-
-                            //System.out.println("=============================");
-
-//                            System.out.printf("%2d    %1b    %4d    %4d  %n", i, known[i], dv[i], pv[i]);
-                            
-                            //System.out.println("=============================");
-                            shortest+="=============================\n";
-                            shortest+=" v    known    dv    pv \n";
-                            shortest+="=============================\n";                           
-                            shortest+=" "+Integer.toString(i) +"    " +known[i]+"     " +dv[i]+"     "+ pv[i]+"\n";
-                            shortest+="=============================\n";
-                            //known[actual] = true;
+                            shortest+="=============================\r\n";
+                            shortest+=" v    known    dv    pv \r\n";
+                            shortest+="=============================\r\n";                           
+                            shortest+=" "+Integer.toString(i) +"    " +known[i]+"     " +dv[i]+"     "+ pv[i]+"\r\n";
+                            shortest+="=============================\r\n";
                         }
                     }
                 }

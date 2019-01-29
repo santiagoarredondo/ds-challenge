@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -203,10 +204,15 @@ public class Huffman {
 
     }
 
-    private static final String INPUT_FILE = "C:\\Users\\sarredondo\\Functional-Programming\\DataStructuresa\\Data\\in\\input.txt";
-    private static final String ENCODED_FILE = "C:\\Users\\sarredondo\\Functional-Programming\\DataStructuresa\\Data\\in\\encoded.txt";
-    private static final String DECODED_FILE = "C:\\Users\\sarredondo\\Functional-Programming\\DataStructuresa\\Data\\in\\encoded.txt";
-    private static final String OUTPUT_FILE = "C:\\Users\\sarredondo\\Functional-Programming\\DataStructuresa\\Data\\out\\output.txt";
+    private static final String INPUT_FILE = System.getProperty("user.dir")+"\\"+"dijk.txt";
+    private static final String ENCODED_FILE = System.getProperty("user.dir")+"\\"+"encodedDijk.txt";
+    private static final String DECODED_FILE = System.getProperty("user.dir")+"\\"+"decodedDijk.txt";
+    private static final String OUTPUT_FILE = System.getProperty("user.dir")+"\\"+"outputDijk.txt";
+    
+    private static final String INPUT_FILE2 = System.getProperty("user.dir")+"\\"+"shortest.txt";
+    private static final String ENCODED_FILE2 = System.getProperty("user.dir")+"\\"+"encodedShort.txt";
+    private static final String DECODED_FILE2 = System.getProperty("user.dir")+"\\"+"decodedShort.txt";
+    private static final String OUTPUT_FILE2 = System.getProperty("user.dir")+"\\"+"outputShort.txt";
 
     private static String readFile(String filePath){
         BufferedReader objReader = null;
@@ -242,11 +248,14 @@ public class Huffman {
     }
     */
 
-    public static  void writeFile(String filePath, String fileContent){
+    public static  void writeFile(String filePath, ArrayList<String> fileContent){
         try {
             FileOutputStream outputStream = new FileOutputStream(filePath);
-            byte[] strToBytes = fileContent.getBytes();
-            outputStream.write(strToBytes);
+            for(String str: fileContent) {            
+	            byte[] strToBytes = str.getBytes();
+	            outputStream.write(strToBytes);	
+	            //outputStream.
+            }
             outputStream.close();
         }catch (Exception e){
             e.printStackTrace();
@@ -292,29 +301,60 @@ public class Huffman {
     }
 
     public void saveData(){
-        writeFile(INPUT_FILE,readFile(INPUT_FILE));
-        writeFile(DECODED_FILE,readFile(DECODED_FILE));
+        //writeFile(INPUT_FILE,readFile(INPUT_FILE));
+        //writeFile(DECODED_FILE,readFile(DECODED_FILE));
     }
 
     public static void main(String[] args) {
+    	ArrayList<String> dijks  = new ArrayList<String>();
+    	ArrayList<String> dijksDec  = new ArrayList<String>();
+    	ArrayList<String> shortest  = new ArrayList<String>();
+    	ArrayList<String> shortestDec  = new ArrayList<String>();
+    	
+    	
         String fileText = readFile(INPUT_FILE);
         byte[] orig = fileText.getBytes();
         Huffman huf = new Huffman(orig);
         byte[] kood = huf.encode(orig);
         System.out.println("---- ENCODED ----");
         System.out.println("writing...");
-        writeFile(ENCODED_FILE, getNormalNotation(kood));
+        dijks.add(getNormalNotation(kood));
+        writeFile(ENCODED_FILE, dijks);
         System.out.println("reading...");
         String encoded = readFile(ENCODED_FILE);
         System.out.println("end");
         byte[] orig2 = huf.decode(kood);
         System.out.println("---- DECODED ----");
         System.out.println("writing...");
-        writeFile(DECODED_FILE, getNormalNotation(orig2));
+        dijksDec.add(getNormalNotation(orig2));
+        writeFile(DECODED_FILE, dijksDec);
         System.out.println("reading...");
         String decoded = readFile(DECODED_FILE);
         System.out.println("Correctly codified: "+Arrays.equals(orig, orig2)); // must be equal: orig, orig2
         System.out.println("Length of encoded file: " + encoded.length());
         System.out.println("Lenght of decoded file: " + decoded.length());
+        
+        
+        String fileTextShort = readFile(INPUT_FILE2);
+        byte[] origShort = fileText.getBytes();
+        Huffman hufShort = new Huffman(origShort);
+        byte[] koodShort = huf.encode(origShort);
+        System.out.println("---- ENCODED ----");
+        System.out.println("writing...");
+        shortest.add(getNormalNotation(koodShort));
+        writeFile(ENCODED_FILE2, shortest);
+        System.out.println("reading...");
+        String encodedShort = readFile(ENCODED_FILE2);
+        System.out.println("end");
+        byte[] orig2Short = huf.decode(koodShort);
+        System.out.println("---- DECODED ----");
+        System.out.println("writing...");
+        shortestDec.add(getNormalNotation(orig2Short));
+        writeFile(DECODED_FILE2, shortestDec);
+        System.out.println("reading...");
+        String decodedShort = readFile(DECODED_FILE2);
+        System.out.println("Correctly codified: "+Arrays.equals(origShort, orig2Short)); // must be equal: orig, orig2
+        System.out.println("Length of encoded file: " + encodedShort.length());
+        System.out.println("Lenght of decoded file: " + decodedShort.length());
     }
 }

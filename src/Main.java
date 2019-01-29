@@ -7,42 +7,32 @@ public class Main {
     private static Graph graph = new Graph();
     private static HashMap<String, Integer> map = new HashMap<>();
     private static  Huffman huff = new Huffman();
+	private static boolean add;
 
     public static void main(String[] Args) throws InvalidNodeIDException, IOException, NodeAlreadyExistsException, NodeDoesNotExistException {
 
         readFileNodes("input.txt", map, graph);
         readFileEdges("input.txt", map, graph);
-
-//        System.out.println(map.get("Colombia"));
-//        System.out.println(map.get("Argentina"));
-//        System.out.println(map.get("Venezuela"));
-//        System.out.println(map.get("Peru"));
-//        System.out.println(map.get("Mexico"));
-//        System.out.println(map.get("Rusia"));
-//        System.out.println(map.get("España"));
-
-//        System.out.println(graph.nodeExists(map.get("Colombia")));
-//        System.out.println(graph.nodeExists(map.get("Argentina")));
-//        System.out.println(graph.nodeExists(map.get("Venezuela")));
-//        System.out.println(graph.nodeExists(map.get("Peru")));
-//        System.out.println(graph.nodeExists(map.get("Mexico")));
-//        System.out.println(graph.nodeExists(map.get("Rusia")));
-//        System.out.println(graph.nodeExists(map.get("España")));
-
-//        System.out.println(graph.getNumEdges(0,1));
-//        System.out.println(graph.getNumEdges(1, 0));
-//        System.out.println(graph.getNumEdges(1, 2));
-//        System.out.println(graph.getNumEdges(2, 6));
-//        System.out.println(graph.getNumEdges(2, 3));
-//        System.out.println(graph.getNumEdges(3, 0));
-//        System.out.println(graph.getNumEdges(5, 4));
-
-
         //graph.printEdges();
-
-        graph.dijkstra(0);        
-        String shortest = graph.shortestPath(0, 3);        
-        huff.writeFile(System.getProperty("user.dir")+"\\"+"shortest.txt",shortest);
+        ArrayList<String> dijkstra = new ArrayList<String>();
+        ArrayList<String> shortestRoad= new ArrayList<String>();
+        ArrayList<String> dijs = new ArrayList<String>();
+        dijkstra.add("=============================\r\n");
+        dijkstra.add(" v    known    dv    pv \r\n");
+        dijkstra.add("=============================\r\n");
+                
+        shortestRoad.add("=============================\r\n");
+        shortestRoad.add(" v    known    dv    pv \r\n");
+        shortestRoad.add("=============================\r\n");
+        dijs = graph.dijkstra(0);
+        for(String dijks: dijs) {
+            dijkstra.add(dijks);
+        }        
+        dijkstra.add("=============================\r\n");
+        huff.writeFile(System.getProperty("user.dir")+"\\"+"dijk.txt", dijkstra);
+        shortestRoad.add(graph.shortestPath(0, 3));
+        shortestRoad.add("=============================\r\n");
+        huff.writeFile(System.getProperty("user.dir")+"\\"+"shortest.txt",shortestRoad);
 
     }
 
