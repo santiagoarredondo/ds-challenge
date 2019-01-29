@@ -35,6 +35,8 @@ public class Main {
         huff.writeFile(System.getProperty("user.dir")+"\\"+"shortest.txt",shortestRoad);
         huff.main(null);
 
+        System.out.println(graph.nodeExists(5));
+
     }
 
     private static void readFileNodes(String filePath, HashMap<String, Integer> m, Graph g) throws IOException, NodeAlreadyExistsException, InvalidNodeIDException, NodeDoesNotExistException {
@@ -45,8 +47,15 @@ public class Main {
             FileInputStream fis = new FileInputStream(new File(filePath));
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             while ((line = br.readLine()) != null) {
-                nd = line.split(",");
-                if (m.containsKey(nd[0]) == false) {
+                if (line.contains(",")) {
+                    nd = line.split(",");
+                    if (m.containsKey(nd[0]) == false) {
+                        m.put(nd[0], count);
+                        g.addNode(m.get(nd[0]));
+                        count++;
+                    }
+                } else {
+                    nd[0] = line;
                     m.put(nd[0], count);
                     g.addNode(m.get(nd[0]));
                     count++;
@@ -65,12 +74,14 @@ public class Main {
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File(filePath)));
             while ((line = br.readLine()) != null) {
-                ed = line.split(",");
-                if (m.containsKey(ed[1]) == false) {
-                    m.put(ed[1], m.size());
-                    g.addNode(m.get(ed[1]));
+                if (line.contains(",")) {
+                    ed = line.split(",");
+                    if (m.containsKey(ed[1]) == false) {
+                        m.put(ed[1], m.size());
+                        g.addNode(m.get(ed[1]));
+                    }
+                    g.addEdge(m.get(ed[0]), m.get(ed[1]), Integer.parseInt(ed[2]));
                 }
-                g.addEdge(m.get(ed[0]), m.get(ed[1]), Integer.parseInt(ed[2]));
             }
         } catch (FileNotFoundException e) {
             System.out.println("File does not exist!");
