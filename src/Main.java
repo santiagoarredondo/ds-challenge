@@ -6,11 +6,11 @@ public class Main {
 
     private static Graph graph = new Graph();
     private static HashMap<String, Integer> map = new HashMap<>();
-    private static  Huffman huff = new Huffman();
+    private static  Huffman huff;
 	private static boolean add;
 
     public static void main(String[] Args) throws InvalidNodeIDException, IOException, NodeAlreadyExistsException, NodeDoesNotExistException {
-
+    	huff = new Huffman();
         readFileNodes("input.txt", map, graph);
         readFileEdges("input.txt", map, graph);
         //graph.printEdges();
@@ -33,6 +33,7 @@ public class Main {
         shortestRoad.add(graph.shortestPath(0, 3));
         shortestRoad.add("=============================\r\n");
         huff.writeFile(System.getProperty("user.dir")+"\\"+"shortest.txt",shortestRoad);
+        huff.main(null);
 
     }
 
