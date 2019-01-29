@@ -35,7 +35,11 @@ public class Main {
         huff.writeFile(System.getProperty("user.dir")+"\\"+"shortest.txt",shortestRoad);
         huff.main(null);
 
-        System.out.println(graph.nodeExists(5));
+        System.out.println(graph.nodeExists(0));
+        System.out.println(graph.nodeExists(1));
+        System.out.println(graph.nodeExists(2));
+        System.out.println(graph.nodeExists(3));
+        System.out.println(graph.nodeExists(4));
 
     }
 

@@ -1,8 +1,13 @@
+Colombia
+Argentina
+Francia
+China
+Chile
+Egipto
 Colombia,Argentina,100
 Colombia,Francia,30
 Argentina,Francia,20
 Francia,China,10
-Chile
 Francia,Egipto,60
 China,Egipto,50
 China,Argentina,15
